@@ -16,13 +16,14 @@ Three branches, three URLs. Every push redeploys in about a minute.
 | Branch | URL | Purpose |
 |---|---|---|
 | `baseline` | `/baseline/` | Frozen starting point. Never commit to it. |
+| `demo-start` | — | Frozen: baseline + the deploy workflow. What `demo` is reset to. |
 | `demo` | `/demo/` | Live-demo and rehearsal branch. Reset it before every run. |
 | `main` | `/` | The finished work. Never touched during the demo. |
 
 **Reset the demo branch** (from your terminal, before each rehearsal or the real thing):
 ```bash
 git fetch origin
-git push --force origin baseline:demo
+git push --force origin origin/demo-start:demo
 ```
 Then start a fresh Claude Code session on the `demo` branch. The repo's `CLAUDE.md` and docs load automatically,
 so the AI starts with the same rules the finished work used.
