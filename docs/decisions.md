@@ -57,3 +57,13 @@ pre-empt X2 (whether the system judges risk at all). If the system later flags r
 - Extra row facts go on a muted 12px line under the primary value (`Stacked`), not in new columns. Five columns max for now.
 - Default order: completed last → priority → nearest due date. Priority is used for ordering but not displayed.
 - Status age ("Updated 18d ago") sits under the badge; blockers and dependents sit under the project name.
+
+## D-005 · Row headers wrap; everything else truncates — 🧑‍🎨 Designer decision
+**Date:** 2026-10-15 · **Status:** Decided
+
+**Context:** Competitive pass on dense rows (GitHub/Primer, Gmail, Apple HIG, Stripe, GitLab). Primer prefers wrapping
+because truncation hides content; the row header is the one cell that must never hide its value.
+**Chosen:** Project name wraps to a maximum of two lines; secondary lines and other cells truncate with a tooltip.
+Also adopted from the same pass: trailing column right-aligned as the scan target; "Critical" named on the secondary
+line so the default order is explainable.
+**Alternative:** truncate everything (uniform row height). Rejected: hides the primary identifier.

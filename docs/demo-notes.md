@@ -47,6 +47,11 @@ Good moment: designer's question reshaped the implementation before any code.
 🧑‍🎨 Chose 1c, 2a. → D-002, D-003. Logged AI defaults separately as D-004.
 Then built it, found two bugs in the screenshot (duplicate date, "overdue" on a completed project), fixed, added `?stress` mode.
 
+### 7. Dense-row competitive pass → three quick wins
+🧑‍🎨 Asked for a second pass on developer tools and consumer products that pack information into rows.
+🤖 Found the shared pattern (primary + one muted line, trailing scan target, click not hover, wrap over truncate),
+recommended four quick wins, flagged one as uncertain. Designer accepted 1–3 and the wrap rule → D-005.
+
 ## Dataset tensions (presenter-only — don't reveal before discovery)
 - Billing Platform Migration: says *On track, 70%*, but tasks are 22/48, it has a blocker open since Sep 24,
   no update since Sep 27, weekly velocity is falling to 0, and 3 projects depend on it.

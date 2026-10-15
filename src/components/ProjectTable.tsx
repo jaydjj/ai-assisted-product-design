@@ -9,10 +9,12 @@ import { Stacked } from './Stacked';
 import { StatusBadge } from './StatusBadge';
 import './ProjectTable.css';
 
-/** Secondary line under the project name: open blockers and downstream dependents. */
+/** Secondary line under the project name: critical priority, open blockers, downstream dependents. */
 function attentionLine(project: Project, all: Project[]): { text: string; title: string } | null {
   const parts: string[] = [];
   const titles: string[] = [];
+  // Priority drives the default order; name it only at the top so readers see why a row is first.
+  if (project.priority === 'critical' && project.status !== 'completed') parts.push('Critical');
   const blockers = openBlockers(project);
   if (blockers.length > 0) {
     const age = oldestOpenBlockerAge(project);

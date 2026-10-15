@@ -52,7 +52,7 @@ Relative phrasing first, absolute date beneath (D-002). Never colored (D-003).
 The portfolio overview. One row per project; the project name is the row header.
 - Five columns: Project · Owner · Status · Progress · Due. Extra facts go on secondary lines, not new columns.
 - Default order (D-004): completed last, then priority, then nearest due date; undated after dated.
-- Project name truncates with a tooltip; the attention line (blockers, dependents) lives beneath it.
+- Project name wraps to two lines; the attention line (critical priority, blockers, dependents) lives beneath it and truncates.
 - Scrolls horizontally on narrow screens (known gap: see opportunities X5).
 
 ## Table patterns
@@ -66,8 +66,12 @@ The portfolio overview. One row per project; the project name is the row header.
 - Use when readers must prioritise, or when facts vary by row (blockers, dependents) and would leave a column mostly empty.
 - Still ≤6 columns. Verbose content (blocker titles, names of dependents) belongs in a detail view, not in the row.
 
-Rules for both: project/entity name is the row header; numbers are tabular; the trailing column is the one people scan
-for (dates, amounts); a stress-data pass (`?stress`) is run before shipping a new column.
+Rules for both:
+- The entity name is the row header. **It wraps (max two lines) rather than truncates** (D-005); everything else truncates with a tooltip.
+- Numbers are tabular. The **trailing column is the scan target** (dates, amounts) and is right-aligned.
+- **Row = summary, click = detail.** No hover-only disclosure (Primer: use progressive disclosure sparingly).
+- Hide a column that is empty for every row; show an explicit empty label when only some rows lack a value.
+- A stress-data pass (`?stress`) is run before shipping a new column.
 
 ## Data conventions
 - **Fixed reference date.** The dataset describes a moment (`TODAY` in `src/lib/dates.ts`); relative text is computed from it, not the clock.
@@ -75,4 +79,4 @@ for (dates, amounts); a stress-data pass (`?stress`) is run before shipping a ne
 
 ## Open questions
 _Undefined areas we expect to decide as we go: risk communication (X2), user-controlled sorting/filtering,
-alerts vs. badges, secondary actions and detail views, responsive layout, wrap-vs-truncate for names._
+alerts vs. badges, secondary actions and detail views, responsive layout._
