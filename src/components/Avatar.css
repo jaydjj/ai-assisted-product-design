@@ -3,11 +3,13 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--color-accent-subtle);
-  color: var(--color-accent);
-  font-size: var(--font-size-xs);
+  background: var(--color-surface-muted);
+  box-shadow: var(--ring-hairline);
+  color: var(--color-text-muted);
+  font-size: 10px;
   font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
 }
