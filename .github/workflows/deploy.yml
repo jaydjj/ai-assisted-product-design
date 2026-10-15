@@ -47,7 +47,7 @@ jobs:
           if git rev-parse -q --verify refs/remotes/origin/baseline >/dev/null; then
             git worktree add /tmp/baseline origin/baseline
             cd /tmp/baseline
-            npm ci
+            ln -s "$GITHUB_WORKSPACE/node_modules" node_modules  # main's deps are a superset
             BUILD_ID="baseline" npm run build
             cp -r dist "$GITHUB_WORKSPACE/dist/baseline"
           else
@@ -61,7 +61,7 @@ jobs:
           if git rev-parse -q --verify refs/remotes/origin/demo >/dev/null; then
             git worktree add /tmp/demo origin/demo
             cd /tmp/demo
-            npm ci
+            ln -s "$GITHUB_WORKSPACE/node_modules" node_modules  # main's deps are a superset
             BUILD_ID="demo-$(git rev-parse --short HEAD)" npm run build
             cp -r dist "$GITHUB_WORKSPACE/dist/demo"
           else
