@@ -61,3 +61,7 @@ h3 {
   font-family: var(--font-family-mono);
   color: var(--color-text-subtle);
 }
+
+.page-footer a {
+  color: inherit;
+}

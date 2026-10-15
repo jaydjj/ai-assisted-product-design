@@ -11,9 +11,63 @@ Moments, prompts, and artifacts worth replaying in the 30-minute talk.
 5. Outcome: before/after + how the design system evolved
 
 ## Setup
-- **Live site:** https://jaydjj.github.io/ai-assisted-product-design/ (current) and `/baseline/` (start).
-  Every push to `main` redeploys in ~1 minute, so the audience can watch the page change alongside the chat.
-- **Starting point:** the `baseline` branch (frozen; never commit to it).
+Three branches, three URLs. Every push redeploys in about a minute.
+
+| Branch | URL | Purpose |
+|---|---|---|
+| `baseline` | `/baseline/` | Frozen starting point. Never commit to it. |
+| `demo` | `/demo/` | Live-demo and rehearsal branch. Reset it before every run. |
+| `main` | `/` | The finished work. Never touched during the demo. |
+
+**Reset the demo branch** (from your terminal, before each rehearsal or the real thing):
+```bash
+git fetch origin
+git push --force origin baseline:demo
+```
+Then start a fresh Claude Code session on the `demo` branch. The repo's `CLAUDE.md` and docs load automatically,
+so the AI starts with the same rules the finished work used.
+
+**Docs are live pages:** `/docs/plan.html`, `/docs/design-system.html`, `/docs/decisions.html`, `/docs/opportunities.html`.
+They render from the markdown in the repo at build time. Show them changing as the demo progresses.
+
+## Runbook (30 min)
+
+| # | Min | Beat | Live or canned | Fallback |
+|---|---|---|---|---|
+| 1 | 0–3 | **Baseline.** Open `/demo/`. "Polished, limited, and the data knows more." Show `src/data/projects.json` briefly. | Live (static) | — |
+| 2 | 3–9 | **Discovery.** Prompt P1. AI computes signals and reports what the table hides. | Live. Reliable: it's arithmetic on JSON. Output varies in wording, not substance. | `/` already shows the result; `docs/opportunities.html` has the findings. |
+| 3 | 9–14 | **Research + roadmap.** Prompt P2. Show `docs/opportunities.md` appear. | Semi-live. Web search is the slow, variable part. Consider pre-running and showing the file. | `/docs/opportunities.html` on `main`. |
+| 4 | 14–25 | **Build one thing.** Prompt P3 (due dates). AI asks the two design questions (relative/absolute; color). Answer them. Watch the page and `decisions.md` update. | Live. The questions are the point; the code is small. | Screenshots `five-col.png`; `/` on main. |
+| 5 | 25–30 | **Outcome.** `/baseline/` vs `/demo/` (or `/`). Open `design-system.html` and `decisions.html`: what grew, who decided what. | Live (static) | — |
+
+What is **unpredictable** live: exact wording, how many questions the AI asks (should be 1–2; `CLAUDE.md` says so),
+web-search latency. What is **reliable**: the data findings, the decision logging, the deploy.
+
+## Prompts that worked (P1–P3)
+
+**P1 — Discovery**
+> Review the Project Portfolio feature and the data behind it in `src/data/`. Identify information we collect but don't
+> expose, usability problems, and quick wins achievable with existing data. Compute, don't guess: compare self-reported
+> status and progress with task completion, blocker age, status age, velocity trend, dependencies and workload.
+> Don't implement anything yet.
+
+**P2 — Research + roadmap**
+> Do a lightweight competitive pass on two or three products known for strong UX in this space (e.g. Linear, Asana,
+> Jira). Distinguish observed patterns from your inferences and cite sources. Then write `docs/opportunities.md` as a
+> Now / Next / Later roadmap: user problem, improvement, evidence, data, dependencies, value, confidence. Recommend
+> priorities but leave the decision to me.
+
+**P3 — Build one improvement**
+> Implement N1 (due dates) in the table. Before adding any new visual convention, check `docs/design-system.md`; if a
+> decision is undefined, ask me with two or three options and a recommendation, one or two questions at a time. Record
+> my decision in `docs/decisions.md` and the usage rule in `docs/design-system.md`, then implement with tokens and push.
+
+**Bonus (if time)** — the scalability question that reshaped the implementation:
+> Will any of the NOW suggestions run into UI crowdedness, given the max and min values in the data?
+
+## Screenshots for fallback
+Kept in `docs/screenshots/`: baseline, five-column, stress data, long names.
+
 
 ## Moments log
 

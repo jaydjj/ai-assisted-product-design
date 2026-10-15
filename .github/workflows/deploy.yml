@@ -5,7 +5,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, demo]
   workflow_dispatch:
 
 permissions:
@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
@@ -51,6 +52,20 @@ jobs:
             cp -r dist "$GITHUB_WORKSPACE/dist/baseline"
           else
             echo "No baseline branch yet; skipping."
+          fi
+
+      - name: Build demo version (if the branch exists)
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/demo/
+        run: |
+          if git rev-parse -q --verify refs/remotes/origin/demo >/dev/null; then
+            git worktree add /tmp/demo origin/demo
+            cd /tmp/demo
+            npm ci
+            BUILD_ID="demo-$(git rev-parse --short HEAD)" npm run build
+            cp -r dist "$GITHUB_WORKSPACE/dist/demo"
+          else
+            echo "No demo branch yet; skipping."
           fi
 
       - uses: actions/upload-pages-artifact@v3

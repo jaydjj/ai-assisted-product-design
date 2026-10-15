@@ -37,5 +37,7 @@ Ask one or two questions at a time. Don't invent questions. Once a decision is m
 Docs describe *why* and *when*. Don't duplicate what the code already says.
 
 ## Git & publishing
-- `main` auto-deploys to GitHub Pages. `/baseline/` always shows the original version (branch `baseline`).
+- `main` → site root (finished work). `baseline` → `/baseline/` (frozen start). `demo` → `/demo/` (live-demo branch).
+- Docs render to `/docs/*.html` at build time from `docs/*.md`. Markdown is the source; never edit the HTML.
 - Commit at meaningful milestones, not every change. Never commit to, move, or delete the `baseline` branch.
+- During a demo or rehearsal, work on `demo` only. `main` is not touched on stage.
