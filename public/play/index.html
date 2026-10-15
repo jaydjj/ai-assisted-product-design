@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Halcyon · Project Portfolio</title>
+<!--
+  Demo player: swaps between snapshots of the app and docs as they were at each step of the real build,
+  so the talk can "update live" without waiting on a deploy. Snapshots are built by scripts/build-play.sh.
+  Keys: → / Space / PageDown next · ← / PageUp back · 0–4 jump · D decisions · S design system ·
+        O opportunities · A or Esc back to the app · H help
+  The URL hash keeps the place (#2, #2/decisions), so a reload doesn't lose it.
+-->
+<style>
+  html, body { margin: 0; height: 100%; background: #faf9f7; overflow: hidden; }
+  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; pointer-events: none; transition: opacity 180ms ease; background: #faf9f7; }
+  iframe.on { opacity: 1; pointer-events: auto; }
+  .tag, .help { position: fixed; left: 16px; bottom: 16px; font: 500 12px/1.4 Inter, system-ui, sans-serif; color: #fff;
+    background: rgba(28, 27, 25, .82); border-radius: 8px; padding: 6px 10px; opacity: 0; transition: opacity 300ms ease; pointer-events: none; z-index: 2; }
+  .tag.show, .help.show { opacity: 1; }
+  .help { bottom: 52px; line-height: 1.7; }
+  .help b { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="tag" id="tag" aria-live="polite"></div>
+<div class="help" id="help">
+  <b>→ Space PgDn</b> next step · <b>← PgUp</b> back · <b>0–4</b> jump<br>
+  <b>D</b> decisions · <b>S</b> design system · <b>O</b> opportunities · <b>A Esc</b> app · <b>H</b> this help
+</div>
+<script>
+  const STEPS = [
+    'Baseline',
+    'Discovery + roadmap',
+    'First build: five columns',
+    'Dense-row quick wins',
+    'Show the exception, not the norm',
+  ];
+  const DOCS = { d: 'decisions', s: 'design-system', o: 'opportunities' };
+  const frames = new Map();
+  let step = 0, view = 'app', tagTimer;
+
+  function src(s, v) { return v === 'app' ? `s${s}/` : `s${s}/docs/${v}.html`; }
+
+  function frame(s, v) {
+    const key = `${s}/${v}`;
+    if (!frames.has(key)) {
+      const f = document.createElement('iframe');
+      f.title = `${STEPS[s]} · ${v}`;
+      f.src = src(s, v);
+      // Keys must work when focus is inside a snapshot (after hovering or clicking the table).
+      f.addEventListener('load', () => {
+        f.contentWindow.addEventListener('keydown', onKey);
+        // Open the decision log at its newest entry, where each step's change lands.
+        if (v === 'decisions') [...f.contentDocument.querySelectorAll('h2')].pop()?.scrollIntoView();
+      });
+      document.body.appendChild(f);
+      frames.set(key, f);
+    }
+    return frames.get(key);
+  }
+
+  function show(s, v, announce = true) {
+    step = Math.max(0, Math.min(STEPS.length - 1, s));
+    // Step 0 has no roadmap yet.
+    view = v === 'opportunities' && step === 0 ? 'app' : v;
+    const target = frame(step, view);
+    for (const f of frames.values()) f.classList.toggle('on', f === target);
+    target.focus();
+    history.replaceState(null, '', `#${step}${view === 'app' ? '' : '/' + view}`);
+    // Warm up the neighbours so the next swap is instant.
+    if (step + 1 < STEPS.length) frame(step + 1, view);
+    if (announce) {
+      const tag = document.getElementById('tag');
+      tag.textContent = `${step} · ${STEPS[step]}${view === 'app' ? '' : ' · ' + view.replace('-', ' ')}`;
+      tag.classList.add('show');
+      clearTimeout(tagTimer);
+      tagTimer = setTimeout(() => tag.classList.remove('show'), 1400);
+    }
+  }
+
+  function onKey(e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if (['arrowright', ' ', 'pagedown'].includes(k)) show(step + 1, view);
+    else if (['arrowleft', 'pageup'].includes(k)) show(step - 1, view);
+    else if (/^[0-9]$/.test(k) && +k < STEPS.length) show(+k, view);
+    else if (DOCS[k]) show(step, view === DOCS[k] ? 'app' : DOCS[k]);
+    else if (k === 'a' || k === 'escape') show(step, 'app');
+    else if (k === 'h') document.getElementById('help').classList.toggle('show');
+    else return;
+    e.preventDefault();
+  }
+
+  window.addEventListener('keydown', onKey);
+  const [s, v] = location.hash.slice(1).split('/');
+  show(Number(s) || 0, Object.values(DOCS).includes(v) ? v : 'app', false);
+</script>
+</body>
+</html>

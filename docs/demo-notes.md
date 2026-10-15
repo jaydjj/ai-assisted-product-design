@@ -31,6 +31,24 @@ docs load automatically, so the AI starts with the same rules the finished work 
 **Docs are live pages:** `/docs/plan.html`, `/docs/design-system.html`, `/docs/decisions.html`, `/docs/opportunities.html`.
 They render from the markdown in the repo at build time. Show them changing as the demo progresses.
 
+## Fast mode: the demo player
+`/play/` replays the real build as five snapshots of the app and its docs, so each beat "updates" instantly instead of
+waiting on a live session and a deploy. Use it as the main path when time is tight, or as the fallback for any beat.
+
+| Key | Does |
+|---|---|
+| → · Space · PgDn (clicker) | Next step |
+| ← · PgUp | Previous step |
+| 0–4 | Jump to a step |
+| D · S · O | Decisions · Design system · Opportunities for the current step (press again for the app) |
+| A · Esc | Back to the app |
+| H | Show the keys |
+
+Steps: **0** baseline · **1** discovery + roadmap (app unchanged; press O) · **2** first build, five columns ·
+**3** dense-row quick wins · **4** show the exception, not the norm. Stay in docs view while pressing → to watch the
+decision log grow; it opens at the newest entry. The URL keeps your place (`/play/#2/decisions`).
+Rebuild the snapshots with `scripts/build-play.sh` (see its header).
+
 ## Runbook (30 min)
 
 | # | Min | Beat | Live or canned | Fallback |
