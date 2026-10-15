@@ -32,6 +32,21 @@ updates on every push, which works better for a live audience.
 ("quiet precision", keep Inter). Recorded as D-001. The `baseline` branch was moved forward to include it, so
 before/after in the demo differs only in what gets built live, not in visual polish.
 
+### 4. Discovery + roadmap
+🤖 Prompt: *"go"* after setup. Claude computed per-project signals (status vs. task %, blocker age, status age,
+velocity trend, dependents, workload) and ran a three-product pass (Linear, Asana, Jira). Output: `docs/opportunities.md`.
+Key reusable line: Linear deliberately keeps health human-judged; our data shows humans lag. → product-policy question X2.
+
+### 5. The scalability question
+🧑‍🎨 *"Will any of the NOW suggestions run into UI crowdedness based on the max and mins of the data?"*
+🤖 Measured the extremes, concluded columns alone would hit 9, proposed 5 columns + secondary line. Designer agreed.
+Good moment: designer's question reshaped the implementation before any code.
+
+### 6. Two design-system decisions, asked one at a time
+🤖 Asked: (1) relative vs absolute dates, (2) whether dates get color. Recommended 1c/2a with tradeoffs.
+🧑‍🎨 Chose 1c, 2a. → D-002, D-003. Logged AI defaults separately as D-004.
+Then built it, found two bugs in the screenshot (duplicate date, "overdue" on a completed project), fixed, added `?stress` mode.
+
 ## Dataset tensions (presenter-only — don't reveal before discovery)
 - Billing Platform Migration: says *On track, 70%*, but tasks are 22/48, it has a blocker open since Sep 24,
   no update since Sep 27, weekly velocity is falling to 0, and 3 projects depend on it.

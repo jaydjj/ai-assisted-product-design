@@ -34,3 +34,26 @@ dashboard guidance). AI presented three directions; the designer chose.
 - Geist Sans/Mono instead of Inter. Rejected: Inter is safe, free, and already loaded.
 
 **Rationale:** Most legible on stage; modernises the baseline with token changes alone; leaves dark mode as a roadmap item.
+
+---
+
+## D-002 · Due dates read relative-first, absolute beneath — 🧑‍🎨 Designer decision
+**Date:** 2026-10-15 · **Status:** Decided
+
+**Chosen:** "Due in 3 days" with "Oct 18" on the secondary line.
+**Alternatives:** relative only (loses the real date); absolute only (reader does the arithmetic).
+**Rationale:** Urgency scans fastest as words; the exact date is one glance away and uses the secondary-line convention.
+
+## D-003 · Dates are never colored — 🧑‍🎨 Designer decision
+**Date:** 2026-10-15 · **Status:** Decided
+
+**Chosen:** Overdue/near-due dates stay in text color; the words carry the meaning.
+**Alternative:** color overdue red / near-due amber. Rejected: reuses status colors for a different meaning and would
+pre-empt X2 (whether the system judges risk at all). If the system later flags risk, that is where color goes.
+
+## D-004 · Secondary line + default order — 🤖 AI default
+**Date:** 2026-10-15 · **Status:** Applied, open to review
+
+- Extra row facts go on a muted 12px line under the primary value (`Stacked`), not in new columns. Five columns max for now.
+- Default order: completed last → priority → nearest due date. Priority is used for ordering but not displayed.
+- Status age ("Updated 18d ago") sits under the badge; blockers and dependents sit under the project name.

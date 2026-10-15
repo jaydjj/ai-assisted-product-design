@@ -37,10 +37,42 @@ Percent complete with a visible numeric value.
 ### Avatar
 Initials in a circle. Decorative only: always render the person's name next to it.
 
+### Stacked (secondary line)
+A primary value with one muted 12px line beneath it. The row-level convention for "one more fact" (D-004).
+- Secondary line is single-line and truncates with an ellipsis; pass `title` so the full text is on hover.
+- Use for: counts, ages, absolute dates, short context. Never for a second primary value.
+- A cell with no secondary content stays single-line; rows don't reserve space for it.
+
+### DueDate
+Relative phrasing first, absolute date beneath (D-002). Never colored (D-003).
+- Phrasing caps: days under 2 weeks, weeks under 90 days, months beyond; "Overdue" beyond 90 days late.
+- `null` → "No due date" in subtle text. Completed projects → "Completed · Was due …", never "overdue".
+
 ### ProjectTable
 The portfolio overview. One row per project; the project name is the row header.
-- Scrolls horizontally on narrow screens (baseline behavior).
+- Five columns: Project · Owner · Status · Progress · Due. Extra facts go on secondary lines, not new columns.
+- Default order (D-004): completed last, then priority, then nearest due date; undated after dated.
+- Project name truncates with a tooltip; the attention line (blockers, dependents) lives beneath it.
+- Scrolls horizontally on narrow screens (known gap: see opportunities X5).
+
+## Table patterns
+
+**Basic table** — a flat list to look things up.
+- ≤5 columns, one line per row, no secondary lines, no default sort beyond source order.
+- Use when every column is populated for most rows and no row needs "one more fact".
+
+**Advanced table** — a working view to decide from.
+- Secondary lines, a defined default order, truncation with tooltips, hover highlight, a stress-data test.
+- Use when readers must prioritise, or when facts vary by row (blockers, dependents) and would leave a column mostly empty.
+- Still ≤6 columns. Verbose content (blocker titles, names of dependents) belongs in a detail view, not in the row.
+
+Rules for both: project/entity name is the row header; numbers are tabular; the trailing column is the one people scan
+for (dates, amounts); a stress-data pass (`?stress`) is run before shipping a new column.
+
+## Data conventions
+- **Fixed reference date.** The dataset describes a moment (`TODAY` in `src/lib/dates.ts`); relative text is computed from it, not the clock.
+- **Explicit empties.** Missing values get words ("No due date"), never a dash or blank.
 
 ## Open questions
-_Undefined areas we expect to decide as we go: risk communication, sorting/filtering, empty states,
-dates, alerts vs. badges, secondary actions, responsive layout._
+_Undefined areas we expect to decide as we go: risk communication (X2), user-controlled sorting/filtering,
+alerts vs. badges, secondary actions and detail views, responsive layout, wrap-vs-truncate for names._

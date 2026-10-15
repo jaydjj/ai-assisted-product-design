@@ -14,7 +14,7 @@
 .project-table th,
 .project-table td {
   height: var(--row-height);
-  padding: 0 var(--space-4);
+  padding: var(--space-2) var(--space-4);
   text-align: left;
   vertical-align: middle;
 }
@@ -44,7 +44,27 @@
 
 .project-table__name {
   font-weight: var(--font-weight-medium);
+  width: 34%;
+  max-width: 0; /* lets the Stacked ellipsis work inside a table cell */
   min-width: 220px;
+}
+
+.project-table__name .stacked__secondary {
+  font-weight: var(--font-weight-regular);
+}
+
+.project-table__owner-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-table__due {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.due-date--none {
+  color: var(--color-text-subtle);
 }
 
 .project-table__owner {

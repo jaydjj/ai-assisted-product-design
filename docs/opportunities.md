@@ -88,4 +88,5 @@
 **N1 → N2 → N3**, then **X2** as the demo's "decision moment". N1 and N2 are small, use real data, and each raises a genuine
 design-system question (date formatting, empty states, count display). X2 is where product policy and design meet.
 
-_Decided:_ —
+_Decided (2026-10-15):_ 🧑‍🎨 Build N1, N2 (as a secondary line), N3, N4, N6 in a five-column layout with secondary
+lines. Defer N5 and N7. Decisions D-002/D-003 cover date display.
