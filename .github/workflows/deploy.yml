@@ -7,9 +7,14 @@ on:
   push:
     branches: [main, demo]
   workflow_dispatch:
+    inputs:
+      reset_demo:
+        description: 'Reset the demo branch to demo-start before deploying'
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -18,7 +23,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Optional: Actions → "Deploy to GitHub Pages" → Run workflow → tick "Reset the demo branch".
+  # Force-pushes demo-start onto demo. main and baseline are never touched.
+  reset:
+    if: ${{ inputs.reset_demo }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git push --force origin origin/demo-start:refs/heads/demo
+
   build:
+    needs: [reset]
+    if: ${{ always() && (needs.reset.result == 'success' || needs.reset.result == 'skipped') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

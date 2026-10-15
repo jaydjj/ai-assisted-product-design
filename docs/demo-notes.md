@@ -20,13 +20,13 @@ Three branches, three URLs. Every push redeploys in about a minute.
 | `demo` | `/demo/` | Live-demo and rehearsal branch. Reset it before every run. |
 | `main` | `/` | The finished work. Never touched during the demo. |
 
-**Reset the demo branch** (from your terminal, before each rehearsal or the real thing):
-```bash
-git fetch origin
-git push --force origin origin/demo-start:demo
-```
-Then start a fresh Claude Code session on the `demo` branch. The repo's `CLAUDE.md` and docs load automatically,
-so the AI starts with the same rules the finished work used.
+**Reset the demo branch** — no terminal needed. On GitHub: **Actions → Deploy to GitHub Pages → Run workflow →
+tick "Reset the demo branch" → Run.** About a minute later `demo` is back at `demo-start` and `/demo/` is rebuilt.
+(Or ask Claude in the build chat to do it; it can trigger the same run.)
+
+Then start a fresh Claude Code session at claude.ai/code on this repo, branch **`demo`**. The repo's `CLAUDE.md` and
+docs load automatically, so the AI starts with the same rules the finished work used. First message:
+*"We're on the demo branch. Push there, never to main."*
 
 **Docs are live pages:** `/docs/plan.html`, `/docs/design-system.html`, `/docs/decisions.html`, `/docs/opportunities.html`.
 They render from the markdown in the repo at build time. Show them changing as the demo progresses.
