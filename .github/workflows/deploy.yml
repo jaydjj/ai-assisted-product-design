@@ -39,18 +39,18 @@ jobs:
           export BUILD_ID="${BUILD_ID::7}"
           npm run build
 
-      - name: Build baseline version (if tagged)
+      - name: Build baseline version (if the branch exists)
         env:
           BASE_PATH: /${{ github.event.repository.name }}/baseline/
         run: |
-          if git rev-parse -q --verify refs/tags/baseline >/dev/null; then
-            git worktree add /tmp/baseline baseline
+          if git rev-parse -q --verify refs/remotes/origin/baseline >/dev/null; then
+            git worktree add /tmp/baseline origin/baseline
             cd /tmp/baseline
             npm ci
             BUILD_ID="baseline" npm run build
             cp -r dist "$GITHUB_WORKSPACE/dist/baseline"
           else
-            echo "No baseline tag yet; skipping."
+            echo "No baseline branch yet; skipping."
           fi
 
       - uses: actions/upload-pages-artifact@v3

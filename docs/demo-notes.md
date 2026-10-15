@@ -13,7 +13,7 @@ Moments, prompts, and artifacts worth replaying in the 30-minute talk.
 ## Setup
 - **Live site:** https://jaydjj.github.io/ai-assisted-product-design/ (current) and `/baseline/` (start).
   Every push to `main` redeploys in ~1 minute, so the audience can watch the page change alongside the chat.
-- **Starting point:** git tag `baseline`.
+- **Starting point:** the `baseline` branch (frozen; never commit to it).
 
 ## Moments log
 

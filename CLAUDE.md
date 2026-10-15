@@ -37,5 +37,5 @@ Ask one or two questions at a time. Don't invent questions. Once a decision is m
 Docs describe *why* and *when*. Don't duplicate what the code already says.
 
 ## Git & publishing
-- `main` auto-deploys to GitHub Pages. `/baseline/` always shows the original version (tag `baseline`).
-- Commit at meaningful milestones, not every change. Never move or delete the `baseline` tag.
+- `main` auto-deploys to GitHub Pages. `/baseline/` always shows the original version (branch `baseline`).
+- Commit at meaningful milestones, not every change. Never commit to, move, or delete the `baseline` branch.
