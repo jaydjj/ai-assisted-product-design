@@ -1,0 +1,12 @@
+[
+  { "id": "u01", "name": "Maya Chen", "role": "Engineering Manager", "team": "Platform" },
+  { "id": "u02", "name": "Daniel Okafor", "role": "Product Manager", "team": "Revenue" },
+  { "id": "u03", "name": "Priya Raman", "role": "Design Lead", "team": "Experience" },
+  { "id": "u04", "name": "Lucas Ferreira", "role": "Staff Engineer", "team": "Revenue" },
+  { "id": "u05", "name": "Hannah Weiss", "role": "Data Engineer", "team": "Data" },
+  { "id": "u06", "name": "Omar Haddad", "role": "Product Manager", "team": "Growth" },
+  { "id": "u07", "name": "Sofia Lindqvist", "role": "Software Engineer", "team": "Experience" },
+  { "id": "u08", "name": "James Park", "role": "QA Lead", "team": "Platform" },
+  { "id": "u09", "name": "Aisha Bello", "role": "Security Engineer", "team": "Platform" },
+  { "id": "u10", "name": "Tomás Rivera", "role": "Software Engineer", "team": "Growth" }
+]

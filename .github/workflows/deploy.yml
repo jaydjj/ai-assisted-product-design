@@ -1,0 +1,68 @@
+# Builds the app and publishes it to GitHub Pages on every push to main.
+# The site root shows the current version; /baseline/ shows the original
+# starting point (the `baseline` git tag) so before/after is always one click away.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build current version
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+          BUILD_ID: ${{ github.sha }}
+        run: |
+          npm ci
+          export BUILD_ID="${BUILD_ID::7}"
+          npm run build
+
+      - name: Build baseline version (if tagged)
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/baseline/
+        run: |
+          if git rev-parse -q --verify refs/tags/baseline >/dev/null; then
+            git worktree add /tmp/baseline baseline
+            cd /tmp/baseline
+            npm ci
+            BUILD_ID="baseline" npm run build
+            cp -r dist "$GITHUB_WORKSPACE/dist/baseline"
+          else
+            echo "No baseline tag yet; skipping."
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

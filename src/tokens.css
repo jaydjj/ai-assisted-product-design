@@ -1,0 +1,82 @@
+/*
+ * Design tokens — the single source of truth for visual values.
+ * Components use semantic tokens (--color-text, --status-*), never raw palette values.
+ * Usage rules live in docs/design-system.md.
+ */
+:root {
+  /* Palette (raw values — reference only through semantic tokens below) */
+  --palette-slate-0: #ffffff;
+  --palette-slate-50: #f7f8fa;
+  --palette-slate-100: #eef0f4;
+  --palette-slate-200: #e1e4ea;
+  --palette-slate-400: #9aa1ae;
+  --palette-slate-600: #5b6270;
+  --palette-slate-900: #1a1d23;
+  --palette-indigo-500: #4f5bd5;
+  --palette-indigo-100: #e8eafb;
+  --palette-green-700: #1f7a4d;
+  --palette-green-100: #e3f4ea;
+  --palette-amber-700: #8a5a00;
+  --palette-amber-100: #fdf1d8;
+  --palette-red-700: #b42318;
+  --palette-red-100: #fde8e6;
+  --palette-gray-700: #4a5160;
+  --palette-gray-100: #eceef2;
+  --palette-blue-700: #2d5bb9;
+  --palette-blue-100: #e5eefc;
+
+  /* Surface & text */
+  --color-bg: var(--palette-slate-50);
+  --color-surface: var(--palette-slate-0);
+  --color-border: var(--palette-slate-200);
+  --color-border-subtle: var(--palette-slate-100);
+  --color-text: var(--palette-slate-900);
+  --color-text-muted: var(--palette-slate-600);
+  --color-text-subtle: var(--palette-slate-400);
+  --color-accent: var(--palette-indigo-500);
+  --color-accent-subtle: var(--palette-indigo-100);
+
+  /* Status (foreground on tinted background; meets 4.5:1 contrast) */
+  --status-on-track-fg: var(--palette-green-700);
+  --status-on-track-bg: var(--palette-green-100);
+  --status-at-risk-fg: var(--palette-amber-700);
+  --status-at-risk-bg: var(--palette-amber-100);
+  --status-off-track-fg: var(--palette-red-700);
+  --status-off-track-bg: var(--palette-red-100);
+  --status-on-hold-fg: var(--palette-gray-700);
+  --status-on-hold-bg: var(--palette-gray-100);
+  --status-completed-fg: var(--palette-blue-700);
+  --status-completed-bg: var(--palette-blue-100);
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.625rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Shape & elevation */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(26, 29, 35, 0.04), 0 1px 3px rgba(26, 29, 35, 0.06);
+
+  /* Layout */
+  --content-max-width: 1120px;
+}
