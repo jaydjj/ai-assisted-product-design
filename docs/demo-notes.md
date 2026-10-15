@@ -10,7 +10,56 @@ Moments, prompts, and artifacts worth replaying in the 30-minute talk.
 4. Live design + build: one improvement, surfacing real design-system decisions
 5. Outcome: before/after + how the design system evolved
 
-## Setup
+## How to run the demo (step by step)
+This is the fast path: the demo player at `/play/` swaps in each step of the real build on a keypress, so nothing
+waits on a live AI session or a deploy. The live path (Setup and Runbook below) is optional.
+
+### The day before
+1. Open `https://jaydjj.github.io/ai-assisted-product-design/play/` and press → four times. Each step should appear
+   instantly. If a step is blank, rebuild the snapshots with `scripts/build-play.sh` and push to `main`.
+2. Test your clicker: **PgDn** advances and **PgUp** goes back.
+3. Have the prompts (P1–P3, below) on a slide or in your notes. You'll read them out; you won't type them.
+
+### Ten minutes before
+1. Open `/play/` full screen (F11, or ⌃⌘F on a Mac) at 100% zoom. If the room is 720p, zoom out to 90% so all
+   14 rows fit; otherwise you'll have to scroll to reach the overdue Data Warehouse row.
+2. Press **H** to check the key hints, then press **H** again to hide them.
+3. Press **0**, so you start on the baseline.
+
+### During the talk
+Every step change shows a small label at the bottom left for about a second. Only you will notice it.
+
+| Min | Press | You see | Say |
+|---|---|---|---|
+| 0–3 | **0** | Baseline: four columns, status pills, no dates | "Polished, limited, and the data knows more than the table shows." |
+| 3–9 | **→** (step 1) | The same table. The UI hasn't changed yet | Read P1. Then reveal two findings from *Dataset tensions*: Billing says *On track, 70%*, but only 22 of 48 tasks are done and a blocker has been open since Sep 24. Mobile Checkout is due in 3 days with 2 blockers. |
+| 9–14 | **O** | The Now / Next / Later roadmap | Read P2. "Observed patterns, kept separate from inferences, with sources." Press **A** to go back to the app. |
+| 14–18 | **→** (step 2) | The first build: five columns, relative dates, a secondary line on every row | "The AI asked me two questions before building, one at a time." Press **D**: D-002 and D-003 are mine; D-004 is the AI's own default, labelled as such. Press **A**. |
+| 18–21 | **→** (step 3) | Due right-aligned, a "Critical" prefix, long names wrapping | "A second competitive pass on dense rows gave three quick wins." Press **D**: D-005. Press **A**. |
+| 21–25 | **→** (step 4) | Four columns, quiet rows, a red blocker count, "Due in 3 days" and "15 days overdue" | The honest moment: "I looked at step 3 and said *this is overwhelming*. The AI's first pass was more information; my eye made it better information." Hover "1 blocker" on Billing to open the card. Press **D**: D-006 to D-008. Press **S** and point at principle 5, *Show the exception, not the norm*. |
+| 25–30 | **0**, then **4** | Before, then after | Flip between them twice. Press **D** on step 4: "Every decision says who made it, the designer or the AI." |
+
+### If something goes wrong
+- **Keys stop working:** click anywhere on the page, then press the key again.
+- **Lost your place:** press a number key (**0**–**4**) to jump straight to that step.
+- **Page went blank or you reloaded:** the address keeps your step (`/play/#2/decisions`), so a reload brings you back to the same view.
+- **Whole site down:** use the screenshots in `docs/screenshots/`.
+
+### Keys
+| Key | Does |
+|---|---|
+| → · Space · PgDn | Next step |
+| ← · PgUp | Previous step |
+| 0–4 | Jump to a step |
+| D · S · O | That step's Decisions · Design system · Opportunities (press again for the app) |
+| A · Esc | Back to the app |
+| H | Show or hide the key hints |
+
+Steps: **0** baseline · **1** discovery + roadmap · **2** first build · **3** dense-row quick wins ·
+**4** show the exception. Pressing → while you're viewing a doc shows that doc growing; the decision log opens at its
+newest entry. Step 0 has no roadmap yet, so **O** stays on the app there.
+
+## Setup (live path, optional)
 Three branches, three URLs. Every push redeploys in about a minute.
 
 | Branch | URL | Purpose |
@@ -30,24 +79,6 @@ docs load automatically, so the AI starts with the same rules the finished work 
 
 **Docs are live pages:** `/docs/plan.html`, `/docs/design-system.html`, `/docs/decisions.html`, `/docs/opportunities.html`.
 They render from the markdown in the repo at build time. Show them changing as the demo progresses.
-
-## Fast mode: the demo player
-`/play/` replays the real build as five snapshots of the app and its docs, so each beat "updates" instantly instead of
-waiting on a live session and a deploy. Use it as the main path when time is tight, or as the fallback for any beat.
-
-| Key | Does |
-|---|---|
-| → · Space · PgDn (clicker) | Next step |
-| ← · PgUp | Previous step |
-| 0–4 | Jump to a step |
-| D · S · O | Decisions · Design system · Opportunities for the current step (press again for the app) |
-| A · Esc | Back to the app |
-| H | Show the keys |
-
-Steps: **0** baseline · **1** discovery + roadmap (app unchanged; press O) · **2** first build, five columns ·
-**3** dense-row quick wins · **4** show the exception, not the norm. Stay in docs view while pressing → to watch the
-decision log grow; it opens at the newest entry. The URL keeps your place (`/play/#2/decisions`).
-Rebuild the snapshots with `scripts/build-play.sh` (see its header).
 
 ## Runbook (30 min)
 
