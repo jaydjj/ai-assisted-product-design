@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>opportunities · Halcyon docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+ * Design tokens — the single source of truth for visual values.
+ * Components use semantic tokens (--color-text, --status-*), never raw palette values.
+ * Usage rules live in docs/design-system.md. Visual direction: docs/decisions.md D-001.
+ */
+:root {
+  /* Palette (raw values — reference only through semantic tokens below).
+     Warm-tinted neutrals; near-black, never pure black. */
+  --palette-neutral-0: #ffffff;
+  --palette-neutral-50: #fafaf9;
+  --palette-neutral-100: #f4f4f2;
+  --palette-neutral-200: #e8e7e3;
+  --palette-neutral-400: #a19f98;
+  --palette-neutral-600: #6b6963;
+  --palette-neutral-900: #1b1a17;
+  --palette-indigo-600: #4f46e5;
+  --palette-indigo-100: #e9e8fd;
+  --palette-green-700: #1d7a4f;
+  --palette-green-100: #e6f4ec;
+  --palette-amber-700: #8f5b05;
+  --palette-amber-100: #fcf1d9;
+  --palette-red-700: #b3261e;
+  --palette-red-100: #fbe9e7;
+  --palette-blue-700: #2a5db0;
+  --palette-blue-100: #e6eefb;
+
+  /* Surface & text */
+  --color-bg: var(--palette-neutral-50);
+  --color-surface: var(--palette-neutral-0);
+  --color-surface-muted: var(--palette-neutral-100);
+  --color-text: var(--palette-neutral-900);
+  --color-text-muted: var(--palette-neutral-600);
+  --color-text-subtle: var(--palette-neutral-400);
+  --color-accent: var(--palette-indigo-600);
+  --color-accent-subtle: var(--palette-indigo-100);
+
+  /* Hairline borders: containment comes from 1px lines, not shadows. */
+  --color-border: rgba(27, 26, 23, 0.1);
+  --color-border-subtle: rgba(27, 26, 23, 0.06);
+  --ring-hairline: 0 0 0 1px var(--color-border);
+
+  /* Status (foreground on tinted background; meets 4.5:1 contrast) */
+  --status-on-track-fg: var(--palette-green-700);
+  --status-on-track-bg: var(--palette-green-100);
+  --status-at-risk-fg: var(--palette-amber-700);
+  --status-at-risk-bg: var(--palette-amber-100);
+  --status-off-track-fg: var(--palette-red-700);
+  --status-off-track-bg: var(--palette-red-100);
+  --status-on-hold-fg: var(--palette-neutral-600);
+  --status-on-hold-bg: var(--palette-neutral-100);
+  --status-completed-fg: var(--palette-blue-700);
+  --status-completed-bg: var(--palette-blue-100);
+
+  /* Signals: computed facts the system points at (D-006). Separate from status so
+     the two vocabularies stay distinct even where the hue is close. */
+  --signal-critical-fg: var(--palette-red-700);
+
+  /* Typography — Inter for everything; numerals are tabular in data contexts. */
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-size-xs: 0.75rem;    /* 12px — badges, column headers */
+  --font-size-sm: 0.8125rem;  /* 13px — table body, dense UI */
+  --font-size-md: 0.875rem;   /* 14px — default body */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.5rem;     /* 24px — page title */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --tracking-tight: -0.02em;  /* display/headings */
+  --tracking-caps: 0.06em;    /* uppercase labels */
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --content-max-width: 1120px;
+  --row-height: 44px;
+}
+
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font-family);font-size:var(--font-size-md);line-height:var(--line-height-normal);color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:var(--space-6) var(--space-5) var(--space-7)}
+nav{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-6);font-size:var(--font-size-xs);text-transform:uppercase;letter-spacing:var(--tracking-caps)}
+nav a{color:var(--color-text-muted);text-decoration:none;padding:4px 10px;border-radius:var(--radius-pill);box-shadow:var(--ring-hairline);background:var(--color-surface)}
+nav a[aria-current]{color:var(--color-text);background:var(--color-surface-muted)}
+nav a.app{margin-left:auto;color:var(--color-accent)}
+h1{font-size:var(--font-size-xl);font-weight:var(--font-weight-semibold);letter-spacing:var(--tracking-tight);margin:0 0 var(--space-4)}
+h2{font-size:var(--font-size-lg);font-weight:var(--font-weight-semibold);letter-spacing:var(--tracking-tight);margin:var(--space-6) 0 var(--space-3);padding-top:var(--space-5);border-top:1px solid var(--color-border)}
+h3{font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);margin:var(--space-5) 0 var(--space-2)}
+p,ul,ol{margin:0 0 var(--space-3)} li{margin-bottom:var(--space-1)}
+blockquote{margin:0 0 var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-surface);box-shadow:var(--ring-hairline);border-radius:var(--radius-md);color:var(--color-text-muted);font-size:var(--font-size-sm)}
+code{font-family:var(--font-family-mono);font-size:0.85em;background:var(--color-surface-muted);padding:1px 5px;border-radius:var(--radius-sm)}
+table{width:100%;border-collapse:collapse;font-size:var(--font-size-sm);margin:0 0 var(--space-4);background:var(--color-surface);box-shadow:var(--ring-hairline);border-radius:var(--radius-md)}
+th,td{text-align:left;padding:var(--space-2) var(--space-3);vertical-align:top;border-top:1px solid var(--color-border-subtle)}
+th{font-size:var(--font-size-xs);text-transform:uppercase;letter-spacing:var(--tracking-caps);color:var(--color-text-muted);border-top:0}
+hr{border:0;border-top:1px solid var(--color-border);margin:var(--space-6) 0}
+a{color:var(--color-accent)}
+em{color:var(--color-text-muted)}
+</style></head><body><div class="wrap">
+<nav><a href="./opportunities.html" aria-current="page">opportunities</a><a href="./design-system.html">design system</a><a href="./decisions.html">decisions</a><a class="app" href="../">← App</a></nav>
+<h1>Opportunities — Now / Next / Later</h1>
+<blockquote>
+<p>Living roadmap. Evidence comes from <code>src/data/</code> as of 2026-10-15 and the Phase 1 competitive pass.
+🤖 = AI recommendation · 🧑‍🎨 = designer decision. Priorities below are recommendations until marked decided.</p>
+</blockquote>
+<h2>NOW — existing data, no new capabilities</h2>
+<h3>N1 · Make time visible 🤖 <em>recommended first</em></h3>
+<ul>
+<li><strong>Problem:</strong> Readers can&#39;t tell what&#39;s urgent. Mobile Checkout (85%, &quot;On track&quot;) is due in 3 days with 2 blockers.</li>
+<li><strong>Improvement:</strong> Due-date column with relative phrasing (&quot;in 3 days&quot;, &quot;15 days overdue&quot;, &quot;no due date&quot;).</li>
+<li><strong>Evidence:</strong> 2 projects overdue/near-due; no date anywhere in the UI. Asana&#39;s portfolio timeline exists for this reason.</li>
+<li><strong>Data:</strong> <code>dueDate</code> (nullable). <strong>Dependencies:</strong> a date-formatting convention; an empty-state convention for null dates.</li>
+<li><strong>Value:</strong> High. Cheapest change with the largest comprehension gain.</li>
+<li><strong>Confidence:</strong> High. Assumes &quot;today&quot; is the reference date.</li>
+</ul>
+<h3>N2 · Show blockers on the row 🤖</h3>
+<ul>
+<li><strong>Problem:</strong> &quot;At risk&quot; says nothing about why. Billing has a 21-day-old blocker; the table shows &quot;On track&quot;.</li>
+<li><strong>Improvement:</strong> Open-blocker count with age of the oldest (&quot;2 blockers · oldest 21d&quot;).</li>
+<li><strong>Evidence:</strong> 4 projects have open blockers; Jira Plans surfaces a blocked count for the same reason.</li>
+<li><strong>Data:</strong> <code>blockers[]</code> with <code>openedOn</code>/<code>resolvedOn</code>. <strong>Dependencies:</strong> how counts/ages are displayed (badge vs. text).</li>
+<li><strong>Value:</strong> High. <strong>Confidence:</strong> High.</li>
+</ul>
+<h3>N3 · Order by what matters 🤖</h3>
+<ul>
+<li><strong>Problem:</strong> Rows are arbitrary; a critical project 15 days out sits next to a low-priority one with no date.</li>
+<li><strong>Improvement:</strong> Default sort by priority, then due date. Optionally group or let the user sort.</li>
+<li><strong>Evidence:</strong> <code>priority</code> exists (3 critical, 4 high) and is unused.</li>
+<li><strong>Data:</strong> <code>priority</code>, <code>dueDate</code>. <strong>Dependencies:</strong> whether priority is shown or only used for ordering.</li>
+<li><strong>Value:</strong> Medium–High. <strong>Confidence:</strong> High.</li>
+</ul>
+<h3>N4 · Status freshness 🤖</h3>
+<ul>
+<li><strong>Problem:</strong> Enterprise SSO reads &quot;At risk&quot; from a status 37 days old; its blocker resolved weeks ago and velocity is rising.</li>
+<li><strong>Improvement:</strong> &quot;Updated 37d ago&quot; beside the status; visually de-emphasise statuses older than N days.</li>
+<li><strong>Evidence:</strong> Status age ranges 1–41 days. Linear attaches health to a dated update for this reason.</li>
+<li><strong>Data:</strong> <code>statusUpdatedOn</code>. <strong>Dependencies:</strong> policy for &quot;stale&quot; threshold (product rule, not design).</li>
+<li><strong>Value:</strong> Medium–High. <strong>Confidence:</strong> Medium; threshold is an assumption.</li>
+</ul>
+<h3>N5 · Reality check on progress 🤖</h3>
+<ul>
+<li><strong>Problem:</strong> Self-reported 70% vs. 46% of tasks done (Billing). Three projects diverge by &gt;10 points.</li>
+<li><strong>Improvement:</strong> Show task-based completion next to the reported figure, or flag divergence.</li>
+<li><strong>Evidence:</strong> <code>tasks.completed/total</code> exists for all projects. No competitor observed showing this gap.</li>
+<li><strong>Data:</strong> <code>progress</code>, <code>tasks</code>. <strong>Dependencies:</strong> a convention for showing two numbers without confusion.</li>
+<li><strong>Value:</strong> Medium. Risk of looking like we distrust owners. <strong>Confidence:</strong> Medium.</li>
+</ul>
+<h3>N6 · Dependency hint 🤖</h3>
+<ul>
+<li><strong>Problem:</strong> Billing slipping quietly delays Usage-Based Pricing, Invoice Redesign and Partner Portal.</li>
+<li><strong>Improvement:</strong> &quot;Blocks 3&quot; on the row; names on hover or in detail.</li>
+<li><strong>Data:</strong> <code>dependsOn</code>. <strong>Value:</strong> Medium. <strong>Confidence:</strong> High.</li>
+</ul>
+<h3>N7 · Portfolio summary strip 🤖</h3>
+<ul>
+<li><strong>Improvement:</strong> Counts by status above the table (9 on track · 2 at risk · 1 off track · 1 on hold · 1 done).</li>
+<li><strong>Evidence:</strong> Asana Portfolios does this. <strong>Value:</strong> Low–Medium (orients, doesn&#39;t decide). <strong>Confidence:</strong> High.</li>
+</ul>
+<h2>NEXT — modest development or validation</h2>
+<h3>X1 · Project detail view</h3>
+<ul>
+<li><strong>Problem:</strong> Rows lead nowhere. Blockers, dependencies, activity and team have no home.</li>
+<li><strong>Improvement:</strong> Click a row for a side panel or page showing everything we hold.</li>
+<li><strong>Dependencies:</strong> navigation/disclosure pattern; detail layout conventions. <strong>Value:</strong> High. <strong>Confidence:</strong> High.</li>
+</ul>
+<h3>X2 · Risk signals vs. computed risk ⚠️ product decision</h3>
+<ul>
+<li><strong>Problem:</strong> Self-reported status is sometimes wrong (Billing) or stale (SSO).</li>
+<li><strong>Options:</strong> (a) show signals (overdue, blockers, stale, falling velocity) beside the human status;
+(b) compute a &quot;needs attention&quot; flag from those signals; (c) replace status with a computed health.</li>
+<li><strong>Evidence:</strong> Linear deliberately keeps health human-judged. Our data shows humans lag.</li>
+<li><strong>Dependencies:</strong> 🧑‍🎨 a policy on what counts as a signal; validation with real PMs before (b)/(c).</li>
+<li><strong>Value:</strong> High. <strong>Confidence:</strong> Low on thresholds; this needs the designer&#39;s call.</li>
+</ul>
+<h3>X3 · Velocity trend</h3>
+<ul>
+<li><strong>Improvement:</strong> 6-week sparkline or &quot;slowing/steady/accelerating&quot; word on the row or in detail.</li>
+<li><strong>Data:</strong> <code>weeklyCompleted</code>. <strong>Dependencies:</strong> a data-viz convention. <strong>Value:</strong> Medium. <strong>Confidence:</strong> Medium.</li>
+</ul>
+<h3>X4 · Workload view</h3>
+<ul>
+<li><strong>Problem:</strong> Maya Chen is on 6 projects; Hannah and James on 5. Invisible.</li>
+<li><strong>Improvement:</strong> Per-person load, or a warning when assigning. <strong>Data:</strong> <code>teamIds</code>. <strong>Value:</strong> Medium. <strong>Confidence:</strong> Medium.</li>
+</ul>
+<h3>X5 · Mobile layout</h3>
+<ul>
+<li><strong>Improvement:</strong> Card layout under ~700px instead of a sideways-scrolling table. <strong>Value:</strong> Medium. <strong>Confidence:</strong> High.</li>
+</ul>
+<h2>LATER — new data, integrations or research</h2>
+<ul>
+<li><strong>L1 · Predicted completion date</strong> from velocity and remaining tasks. Needs validation that velocity is meaningful.</li>
+<li><strong>L2 · Live task integration</strong> (Jira/Linear) so progress isn&#39;t self-reported.</li>
+<li><strong>L3 · Written status updates</strong> à la Linear, with health attached to the update, not the project.</li>
+<li><strong>L4 · Dark mode</strong> — a token swap once the system stabilises.</li>
+<li><strong>L5 · Notifications / digests</strong> when a project crosses a risk threshold.</li>
+</ul>
+<h2>Recommended order 🤖</h2>
+<p><strong>N1 → N2 → N3</strong>, then <strong>X2</strong> as the demo&#39;s &quot;decision moment&quot;. N1 and N2 are small, use real data, and each raises a genuine
+design-system question (date formatting, empty states, count display). X2 is where product policy and design meet.</p>
+<p><em>Decided (2026-10-15):</em> 🧑‍🎨 Build N1, N2 (as a secondary line), N3, N4, N6 in a five-column layout with secondary
+lines. Defer N5 and N7. Decisions D-002/D-003 cover date display.</p>
+
+</div></body></html>
