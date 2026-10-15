@@ -1,33 +1,54 @@
 import type { Project } from '../types';
 import { getPerson } from '../data';
-import { formatAge } from '../lib/dates';
+import { STALE_STATUS_DAYS, daysSince, formatAge } from '../lib/dates';
 import { dependents, oldestOpenBlockerAge, openBlockers, sortForPortfolio } from '../lib/signals';
 import { Avatar } from './Avatar';
 import { DueDate } from './DueDate';
-import { ProgressBar } from './ProgressBar';
+import { HoverCard } from './HoverCard';
+import { ProgressStatus } from './ProgressStatus';
 import { Stacked } from './Stacked';
-import { StatusBadge } from './StatusBadge';
 import './ProjectTable.css';
 
-/** Secondary line under the project name: critical priority, open blockers, downstream dependents. */
-function attentionLine(project: Project, all: Project[]): { text: string; title: string } | null {
-  const parts: string[] = [];
-  const titles: string[] = [];
-  // Priority drives the default order; name it only at the top so readers see why a row is first.
-  if (project.priority === 'critical' && project.status !== 'completed') parts.push('Critical');
+/**
+ * Secondary line under the project name: the open-blocker count only. Red when the project is
+ * critical priority (D-006). Everything else (titles, age, dependents) lives in the hover card.
+ */
+function BlockerLine({ project, all }: { project: Project; all: Project[] }) {
   const blockers = openBlockers(project);
-  if (blockers.length > 0) {
-    const age = oldestOpenBlockerAge(project);
-    parts.push(`${blockers.length} ${blockers.length === 1 ? 'blocker' : 'blockers'} · oldest ${age}d`);
-    titles.push(...blockers.map((b) => `Blocker: ${b.title}`));
-  }
+  if (blockers.length === 0) return null;
+  const critical = project.priority === 'critical';
+  const age = oldestOpenBlockerAge(project);
   const deps = dependents(project, all);
-  if (deps.length > 0) {
-    parts.push(`Blocks ${deps.length}`);
-    titles.push(`Blocks: ${deps.map((d) => d.name).join(', ')}`);
-  }
-  if (parts.length === 0) return null;
-  return { text: parts.join(' · '), title: titles.join('\n') };
+  return (
+    <HoverCard
+      className={`blocker-count${critical ? ' blocker-count--critical' : ''}`}
+      trigger={
+        <>
+          {blockers.length} {blockers.length === 1 ? 'blocker' : 'blockers'}
+          {critical ? <span className="visually-hidden"> on a critical project</span> : null}
+        </>
+      }
+    >
+      <span className="hover-card__heading">Open blockers · oldest {age}d</span>
+      <ul className="hover-card__list">
+        {blockers.map((b) => (
+          <li key={b.id}>
+            {b.title} <span className="hover-card__meta">· {daysSince(b.openedOn)}d</span>
+          </li>
+        ))}
+      </ul>
+      {deps.length > 0 ? (
+        <>
+          <span className="hover-card__heading">Blocks {deps.length}</span>
+          <ul className="hover-card__list">
+            {deps.map((d) => (
+              <li key={d.id}>{d.name}</li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+    </HoverCard>
+  );
 }
 
 export function ProjectTable({ projects }: { projects: Project[] }) {
@@ -39,7 +60,6 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
           <tr>
             <th scope="col">Project</th>
             <th scope="col">Owner</th>
-            <th scope="col">Status</th>
             <th scope="col">Progress</th>
             <th scope="col">Due</th>
           </tr>
@@ -47,15 +67,12 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
         <tbody>
           {rows.map((project) => {
             const owner = getPerson(project.ownerId);
-            const attention = attentionLine(project, projects);
+            const statusAge = daysSince(project.statusUpdatedOn);
+            const stale = statusAge > STALE_STATUS_DAYS && project.status !== 'completed';
             return (
               <tr key={project.id}>
                 <th scope="row" className="project-table__name">
-                  <Stacked
-                    primary={project.name}
-                    secondary={attention?.text}
-                    title={attention?.title}
-                  />
+                  <Stacked primary={project.name} secondary={<BlockerLine project={project} all={projects} />} />
                 </th>
                 <td>
                   <span className="project-table__owner">
@@ -65,12 +82,9 @@ export function ProjectTable({ projects }: { projects: Project[] }) {
                 </td>
                 <td>
                   <Stacked
-                    primary={<StatusBadge status={project.status} />}
-                    secondary={`Updated ${formatAge(project.statusUpdatedOn)}`}
+                    primary={<ProgressStatus value={project.progress} status={project.status} label={`${project.name} progress`} />}
+                    secondary={stale ? `Status updated ${formatAge(project.statusUpdatedOn)}` : undefined}
                   />
-                </td>
-                <td>
-                  <ProgressBar value={project.progress} label={`${project.name} progress`} />
                 </td>
                 <td className="project-table__due">
                   <DueDate iso={project.dueDate} completed={project.status === 'completed'} />

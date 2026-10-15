@@ -26,26 +26,26 @@ export function formatShortDate(iso: string, from: Date = TODAY): string {
   });
 }
 
+/** Days either side of today within which a due date is "outside the norm" (D-002, revised). */
+export const DUE_ATTENTION_WINDOW = 7;
+
 /**
- * Relative phrasing for due dates (D-002). Capped beyond 90 days either way so the
- * text stays short; the absolute date is always shown alongside it.
+ * Due date text (D-002, revised): the absolute date normally; relative phrasing only when
+ * the date is within DUE_ATTENTION_WINDOW days or already past.
  */
-export function formatRelativeDue(iso: string, from: Date = TODAY): string {
+export function formatDue(iso: string, from: Date = TODAY): { text: string; outsideNorm: boolean } {
   const n = daysUntil(iso, from);
-  if (n === 0) return 'Due today';
   if (n < 0) {
     const late = -n;
-    if (late > 90) return 'Overdue';
-    return `${late} ${late === 1 ? 'day' : 'days'} overdue`;
+    return { text: late > 90 ? 'Overdue' : `${late} ${late === 1 ? 'day' : 'days'} overdue`, outsideNorm: true };
   }
-  if (n > 90) {
-    const months = Math.round(n / 30);
-    return `Due in ${months} ${months === 1 ? 'month' : 'months'}`;
-  }
-  if (n < 14) return `Due in ${n} ${n === 1 ? 'day' : 'days'}`;
-  const weeks = Math.round(n / 7);
-  return `Due in ${weeks} ${weeks === 1 ? 'week' : 'weeks'}`;
+  if (n === 0) return { text: 'Due today', outsideNorm: true };
+  if (n <= DUE_ATTENTION_WINDOW) return { text: `Due in ${n} ${n === 1 ? 'day' : 'days'}`, outsideNorm: true };
+  return { text: formatShortDate(iso, from), outsideNorm: false };
 }
+
+/** Status older than this is shown as stale (D-004, revised). A policy value, not a visual one. */
+export const STALE_STATUS_DAYS = 14;
 
 /** "today", "yesterday", "18d ago" — for secondary lines. */
 export function formatAge(iso: string, from: Date = TODAY): string {

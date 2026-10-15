@@ -1,0 +1,44 @@
+.progress-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 180px;
+}
+
+.progress-status__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+}
+
+.progress-status__value {
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.progress-status__status {
+  font-weight: var(--font-weight-medium);
+  color: var(--status-fg);
+}
+
+.progress-status__track {
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.progress-status__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--status-fg);
+}
+
+.progress-status--on_track { --status-fg: var(--status-on-track-fg); }
+.progress-status--at_risk { --status-fg: var(--status-at-risk-fg); }
+.progress-status--off_track { --status-fg: var(--status-off-track-fg); }
+.progress-status--on_hold { --status-fg: var(--status-on-hold-fg); }
+.progress-status--completed { --status-fg: var(--status-completed-fg); }

@@ -17,7 +17,7 @@ export default function App() {
       </header>
       <ProjectTable projects={data} />
       <footer className="page-footer">
-        Build {__BUILD_ID__} · Fictional data for demonstration · <a href="docs/plan.html">Plan Build {__BUILD_ID__} · Fictional data for demonstrationamp; docs</a>
+        Build {__BUILD_ID__} · Fictional data for demonstration · <a href="docs/plan.html">Plan &amp; docs</a>
       </footer>
     </main>
   );

@@ -1,22 +1,16 @@
-import { formatRelativeDue, formatShortDate } from '../lib/dates';
-import { Stacked } from './Stacked';
+import { formatDue, formatShortDate } from '../lib/dates';
 
 /**
- * Due date cell (D-002): relative phrasing first, absolute date beneath.
- * Never colored — urgency is read from the words, not from a status color.
+ * Due date cell (D-002 revised): the absolute date normally; relative words only when the
+ * date is within a week or already past. One line. Never colored (D-003).
  */
 export function DueDate({ iso, completed = false }: { iso: string | null; completed?: boolean }) {
-  if (!iso) {
-    return <span className="due-date due-date--none">No due date</span>;
-  }
-  if (completed) {
-    // A finished project is never "overdue"; keep the date for reference.
-    return <Stacked primary={<span className="due-date">Completed</span>} secondary={`Was due ${formatShortDate(iso)}`} />;
-  }
+  if (!iso) return <span className="due-date due-date--none">No due date</span>;
+  if (completed) return <span className="due-date due-date--none">{formatShortDate(iso)}</span>;
+  const { text, outsideNorm } = formatDue(iso);
   return (
-    <Stacked
-      primary={<span className="due-date">{formatRelativeDue(iso)}</span>}
-      secondary={formatShortDate(iso)}
-    />
+    <span className={`due-date${outsideNorm ? ' due-date--attention' : ''}`} title={outsideNorm ? formatShortDate(iso) : undefined}>
+      {text}
+    </span>
   );
 }

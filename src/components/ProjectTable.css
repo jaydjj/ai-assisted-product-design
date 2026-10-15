@@ -2,7 +2,13 @@
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--ring-hairline);
-  overflow-x: auto;
+}
+
+/* Only narrow screens need to scroll; on wide ones the table must not clip hover cards. */
+@media (max-width: 900px) {
+  .project-table {
+    overflow-x: auto;
+  }
 }
 
 .project-table table {
@@ -66,19 +72,33 @@
   text-overflow: ellipsis;
 }
 
-.project-table__due,
+.project-table td.project-table__due,
 .project-table thead th:last-child {
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
-.project-table__due .stacked {
-  align-items: flex-end;
-}
-
 .due-date--none {
   color: var(--color-text-subtle);
+}
+
+.due-date--attention {
+  font-weight: var(--font-weight-medium);
+}
+
+.blocker-count--critical {
+  color: var(--signal-critical-fg);
+  font-weight: var(--font-weight-medium);
+}
+
+.project-table .stacked__primary .progress-status {
+  white-space: normal;
+}
+
+/* A hover card inside a secondary line must escape the line's ellipsis clipping. */
+.project-table .stacked__secondary:has(.hover-card) {
+  overflow: visible;
 }
 
 .project-table__owner {

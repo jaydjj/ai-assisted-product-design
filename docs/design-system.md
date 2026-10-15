@@ -8,7 +8,9 @@
 2. **Never rely on color alone.** Every color-coded meaning also has text.
 3. **Honest data.** Label where information comes from (e.g. self-reported vs. measured).
 
-4. **Color means state.** The interface is near-achromatic; color appears only for status or action.
+4. **Color means state.** The interface is near-achromatic; color appears only for status, a signal, or an action.
+5. **Show the exception, not the norm.** Secondary facts appear only when they are outside the norm (a date within a
+   week or past; a status older than 14 days; an open blocker). A row with nothing wrong has nothing extra on it.
 
 ## Visual direction — "quiet precision" (D-001)
 - Warm-tinted neutrals: near-black text (never pure black) on an off-white canvas.
@@ -24,15 +26,12 @@
 
 ## Components
 
-### StatusBadge
-Shows a project's **self-reported** status: On track, At risk, Off track, On hold, Completed.
-- Always shows a dot and a text label. Color is never the only signal.
-- Communicates what the owner *said*, not a computed health score.
-
-### ProgressBar
-Percent complete with a visible numeric value.
-- Requires an accessible label that names what is measured.
-- Currently shows **self-reported** progress.
+### ProgressStatus
+Progress and status in one cell (D-007): percentage left, status word right, bar colored by status.
+- The status word is always present; the bar color repeats it, never replaces it.
+- Both values are **self-reported** by the owner; the component does not judge them.
+- Available but no longer used in the table: `StatusBadge` (pill) and `ProgressBar` (neutral bar). Use them when
+  status or progress appears alone, e.g. in a detail view.
 
 ### Avatar
 Initials in a circle. Decorative only: always render the person's name next to it.
@@ -44,15 +43,28 @@ A primary value with one muted 12px line beneath it. The row-level convention fo
 - A cell with no secondary content stays single-line; rows don't reserve space for it.
 
 ### DueDate
-Relative phrasing first, absolute date beneath (D-002). Never colored (D-003).
-- Phrasing caps: days under 2 weeks, weeks under 90 days, months beyond; "Overdue" beyond 90 days late.
-- `null` → "No due date" in subtle text. Completed projects → "Completed · Was due …", never "overdue".
+One line. The absolute date normally; relative words only outside the norm (D-002 revised): within 7 days
+("Due in 3 days") or past ("15 days overdue", capped at "Overdue" past 90 days). Never colored (D-003); attention
+dates use medium weight and show the absolute date on hover.
+- `null` → "No due date" in subtle text. Completed → the date, in subtle text, never "overdue".
+
+### HoverCard
+Trigger text plus a card on hover or keyboard focus, for detail that doesn't earn a place in the row.
+- The trigger must make sense alone ("2 blockers"); the card only adds (titles, ages, what it blocks).
+- Not for primary information, and never the only way to reach something actionable.
+
+### Signals (D-006)
+A **signal** is a computed fact the system points at, distinct from self-reported status. Today there is one:
+an open blocker on a critical-priority project, shown as a red count (`--signal-critical-fg`) with screen-reader
+text. Signals use the `--signal-*` tokens, never `--status-*`, so the two vocabularies stay separate.
 
 ### ProjectTable
 The portfolio overview. One row per project; the project name is the row header.
-- Five columns: Project · Owner · Status · Progress · Due. Extra facts go on secondary lines, not new columns.
+- Four columns: Project · Owner · Progress (with status) · Due. Extra facts go on secondary lines, not new columns.
 - Default order (D-004): completed last, then priority, then nearest due date; undated after dated.
-- Project name wraps to two lines; the attention line (critical priority, blockers, dependents) lives beneath it and truncates.
+- Project name wraps to two lines. Beneath it, only the open-blocker count (red when critical); details in its hover card.
+- Status age appears under the progress cell only when older than 14 days.
+- Known gap: a project that blocks others but has no blockers of its own shows no dependents in the row.
 - Scrolls horizontally on narrow screens (known gap: see opportunities X5).
 
 ## Table patterns

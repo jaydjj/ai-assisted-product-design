@@ -51,6 +51,10 @@
   --status-completed-fg: var(--palette-blue-700);
   --status-completed-bg: var(--palette-blue-100);
 
+  /* Signals: computed facts the system points at (D-006). Separate from status so
+     the two vocabularies stay distinct even where the hue is close. */
+  --signal-critical-fg: var(--palette-red-700);
+
   /* Typography — Inter for everything; numerals are tabular in data contexts. */
   --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-family-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;

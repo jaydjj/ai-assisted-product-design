@@ -38,7 +38,7 @@ They render from the markdown in the repo at build time. Show them changing as t
 | 1 | 0–3 | **Baseline.** Open `/demo/`. "Polished, limited, and the data knows more." Show `src/data/projects.json` briefly. | Live (static) | — |
 | 2 | 3–9 | **Discovery.** Prompt P1. AI computes signals and reports what the table hides. | Live. Reliable: it's arithmetic on JSON. Output varies in wording, not substance. | `/` already shows the result; `docs/opportunities.html` has the findings. |
 | 3 | 9–14 | **Research + roadmap.** Prompt P2. Show `docs/opportunities.md` appear. | Semi-live. Web search is the slow, variable part. Consider pre-running and showing the file. | `/docs/opportunities.html` on `main`. |
-| 4 | 14–25 | **Build one thing.** Prompt P3 (due dates). AI asks the two design questions (relative/absolute; color). Answer them. Watch the page and `decisions.md` update. | Live. The questions are the point; the code is small. | Screenshots `five-col.png`; `/` on main. |
+| 4 | 14–25 | **Build one thing.** Prompt P3 (due dates). AI asks how dates should read. Answer: *"absolute normally; relative only when due within a week or overdue."* Then: *"apply that principle to everything else on the row."* Watch the page and `decisions.md` update. | Live. The principle emerging from one answer is the point. | Screenshots in `docs/screenshots/`; `/` on main. |
 | 5 | 25–30 | **Outcome.** `/baseline/` vs `/demo/` (or `/`). Open `design-system.html` and `decisions.html`: what grew, who decided what. | Live (static) | — |
 
 What is **unpredictable** live: exact wording, how many questions the AI asks (should be 1–2; `CLAUDE.md` says so),
@@ -62,6 +62,10 @@ web-search latency. What is **reliable**: the data findings, the decision loggin
 > Implement N1 (due dates) in the table. Before adding any new visual convention, check `docs/design-system.md`; if a
 > decision is undefined, ask me with two or three options and a recommendation, one or two questions at a time. Record
 > my decision in `docs/decisions.md` and the usage rule in `docs/design-system.md`, then implement with tokens and push.
+
+**P3 follow-up — the principle**
+> Use the absolute date normally and relative wording only when it's outside the norm: due within a week, or overdue.
+> Then treat that as a principle, "show the exception, not the norm", and apply it to everything else on the row.
 
 **Bonus (if time)** — the scalability question that reshaped the implementation:
 > Will any of the NOW suggestions run into UI crowdedness, given the max and min values in the data?
@@ -106,6 +110,15 @@ Then built it, found two bugs in the screenshot (duplicate date, "overdue" on a 
 🧑‍🎨 Asked for a second pass on developer tools and consumer products that pack information into rows.
 🤖 Found the shared pattern (primary + one muted line, trailing scan target, click not hover, wrap over truncate),
 recommended four quick wins, flagged one as uncertain. Designer accepted 1–3 and the wrap rule → D-005.
+
+### 8. The second-guess (the most honest moment)
+🧑‍🎨 Looking at the five-column version: *"Now we have so much information this is overwhelming to look at."* Asked for
+relative dates only outside norms, blocker count only (red if critical), detail on hover, and "a more modern way to
+combine progress and status; can we derive meaning more simply?"
+🤖 Named the principle ("show the exception, not the norm"), flagged that a red count is a new signal vocabulary (D-006),
+and mocked three status+progress options instead of building one.
+🧑‍🎨 Chose A and accepted the signal token. → D-006, D-007, D-008. Columns went from five back to four, with less on each row.
+Worth saying on stage: the AI's first pass was *more* information; the designer's eye made it *better* information.
 
 ## Dataset tensions (presenter-only — don't reveal before discovery)
 - Billing Platform Migration: says *On track, 70%*, but tasks are 22/48, it has a blocker open since Sep 24,
