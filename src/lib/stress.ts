@@ -13,7 +13,7 @@ export function stressProjects(projects: Project[]): Project[] {
     openedOn: '2026-04-01',
     resolvedOn: null,
   });
-  copy[0].name = 'Billing Platform Migration — Phase 2 (EMEA, APAC and LATAM entities, incl. tax)';
+  copy[0].name = 'Billing Platform Migration — Phase 2 (EMEA, APAC and LATAM entities, incl. tax, FX and dunning)';
   copy[0].blockers = Array.from({ length: 12 }, (_, i) => blocker(i));
   copy[1].name = 'Mobile Checkout Redesign for iOS, Android and Progressive Web App';
   copy[1].dueDate = '2025-11-01'; // ~1 year overdue

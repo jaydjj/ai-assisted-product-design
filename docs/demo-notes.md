@@ -60,5 +60,6 @@ recommended four quick wins, flagged one as uncertain. Designer accepted 1–3 a
 - Data Warehouse Consolidation: past its due date (Sep 30); Customer Health Score is on hold waiting on it.
 - Maya Chen owns 2 projects and is on the team of 6, including the critical Billing migration.
 - Two projects have no due date (empty-state question).
+- Three names are long on purpose (SSO, Data Warehouse, Notifications) so the wrap rule (D-005) is visible with real data.
 - Priority exists (4 critical) but the table ignores it; rows are in arbitrary order.
 - The table scrolls sideways on mobile.

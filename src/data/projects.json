@@ -40,7 +40,7 @@
   },
   {
     "id": "p03",
-    "name": "Enterprise SSO",
+    "name": "Enterprise Single Sign-On (SAML and OIDC) for Regulated Customers",
     "summary": "SAML and OIDC single sign-on for enterprise customers.",
     "ownerId": "u09",
     "teamIds": ["u09", "u01", "u10"],
@@ -129,7 +129,7 @@
   },
   {
     "id": "p08",
-    "name": "Data Warehouse Consolidation",
+    "name": "Data Warehouse Consolidation — Merge Finance, Sales and Support Reporting",
     "summary": "Merge three reporting databases into a single warehouse.",
     "ownerId": "u05",
     "teamIds": ["u05", "u01"],
@@ -233,7 +233,7 @@
   },
   {
     "id": "p14",
-    "name": "Notification Preferences",
+    "name": "Notification Preferences and Digest Scheduling",
     "summary": "Let users choose which emails and in-app alerts they receive.",
     "ownerId": "u01",
     "teamIds": ["u01", "u10", "u08"],
