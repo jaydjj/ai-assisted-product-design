@@ -27,6 +27,11 @@ then asked for approval before building.
 plus a GitHub page that updates."* That replaced the plan of running the app locally with a public URL that
 updates on every push, which works better for a live audience.
 
+### 3. Pre-demo restyle (not part of the talk)
+🧑‍🎨 Before discovery, the designer asked for a quick competitive look at modern UI and chose direction A
+("quiet precision", keep Inter). Recorded as D-001. The `baseline` branch was moved forward to include it, so
+before/after in the demo differs only in what gets built live, not in visual polish.
+
 ## Dataset tensions (presenter-only — don't reveal before discovery)
 - Billing Platform Migration: says *On track, 70%*, but tasks are 22/48, it has a blocker open since Sep 24,
   no update since Sep 27, weekly velocity is falling to 0, and 3 projects depend on it.

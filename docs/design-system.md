@@ -8,7 +8,15 @@
 2. **Never rely on color alone.** Every color-coded meaning also has text.
 3. **Honest data.** Label where information comes from (e.g. self-reported vs. measured).
 
-_Status: baseline drafts by AI, not yet reviewed by the designer._
+4. **Color means state.** The interface is near-achromatic; color appears only for status or action.
+
+## Visual direction — "quiet precision" (D-001)
+- Warm-tinted neutrals: near-black text (never pure black) on an off-white canvas.
+- **Containment by hairline, not shadow.** Cards and tables use a 1px ring (`--ring-hairline`); no drop shadows.
+- Headings use tight tracking (`--tracking-tight`); uppercase labels use wide tracking (`--tracking-caps`).
+- Dense data: 13px table text, 44px rows, tabular numerals. Mono (`--font-family-mono`) for technical values.
+- One accent (indigo) reserved for actions and focus. Progress fills use the text color, not the accent.
+- Light mode only for now; dark mode is a token swap when we get there.
 
 ## Tokens
 - Components use **semantic tokens** (`--color-text`, `--status-at-risk-fg`) and never palette tokens (`--palette-*`).
